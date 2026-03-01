@@ -11,6 +11,7 @@ import org.jabref.logic.importer.fetcher.citation.semanticscholar.SemanticSchola
 import org.jabref.logic.importer.util.GrobidPreferences;
 
 public enum CitationFetcherType {
+    ALL(AllCitationFetcher.FETCHER_NAME),
     CROSSREF(CrossRefCitationFetcher.FETCHER_NAME),
     OPEN_ALEX(OpenAlex.FETCHER_NAME),
     OPEN_CITATIONS(OpenCitationsFetcher.FETCHER_NAME),
@@ -38,15 +39,13 @@ public enum CitationFetcherType {
                                                      GrobidPreferences grobidPreferences,
                                                      AiService aiService) {
         return switch (citationFetcherName) {
-            case CROSSREF ->
-                    new CrossRefCitationFetcher(importerPreferences, importFormatPreferences,
-                            citationKeyPatternPreferences, grobidPreferences, aiService);
-            case OPEN_ALEX ->
-                    new OpenAlex(importerPreferences);
-            case OPEN_CITATIONS ->
-                    new OpenCitationsFetcher(importerPreferences);
-            case SEMANTIC_SCHOLAR ->
-                    new SemanticScholarCitationFetcher(importerPreferences);
+            case ALL -> new AllCitationFetcher(importerPreferences, importFormatPreferences,
+                    citationKeyPatternPreferences, grobidPreferences, aiService);
+            case CROSSREF -> new CrossRefCitationFetcher(importerPreferences, importFormatPreferences,
+                    citationKeyPatternPreferences, grobidPreferences, aiService);
+            case OPEN_ALEX -> new OpenAlex(importerPreferences);
+            case OPEN_CITATIONS -> new OpenCitationsFetcher(importerPreferences);
+            case SEMANTIC_SCHOLAR -> new SemanticScholarCitationFetcher(importerPreferences);
         };
     }
 }
